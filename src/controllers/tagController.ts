@@ -15,9 +15,10 @@ export const getTags = async (req: Request, res: Response) => {
     process.exit(1);
   }
 };
-export const getTagById = async (req: Request, res: Response) => {
+export const getPairById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+
     const tag = await TagModel.findOne({ id: id });
     if (!tag) {
       res.status(404).send('Tag not found');
@@ -107,7 +108,8 @@ export const addTag = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const { tagged_type, batch } = req.body;
-    const tag = await TagModel.findById({ id, batch });
+    console.log('Received data:', { id, tagged_type, batch });
+    const tag = await TagModel.findOne({ id, batch });
     if (!tag) {
       res.status(404).send('Tag not found');
       return;
